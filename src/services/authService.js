@@ -9,7 +9,7 @@ class AuthService {
       if (!data.email) {
         throw new Error('O email do usuario é obrigatório.');
       }
-  
+
       if (!data.senha) {
         throw new Error('A senha de usuario é obrigatório.');
       }
@@ -26,12 +26,16 @@ class AuthService {
         throw new Error('Usuario ou senha invalido.');
       }
 
-      const accessToken = jsonwebtoken.sign({
-        id: usuario.id,
-        email: usuario.email,
-      }, constants.jsonSecret, {
-        expiresIn: 86400,
-      });
+      const accessToken = jsonwebtoken.sign(
+        {
+          id: usuario.id,
+          email: usuario.email,
+        },
+        constants.jsonSecret,
+        {
+          expiresIn: 86400,
+        }
+      );
 
       return { message: 'Usuario conectado', accessToken };
     } catch (err) {
@@ -40,11 +44,30 @@ class AuthService {
   }
 
   async cadastrarUsuario(data) {
-    data.senha = await bcryptjs.hash(data.senha, 8);
-    
-    const usuario = new Usuario(data);
     try {
+      if (!data.nome) {
+        throw new Error('O nome de usuario é obrigatório.');
+      }
+
+      if (!data.email) {
+        throw new Error('O email de usuario é obrigatório.');
+      }
+
+      if (!data.senha) {
+        throw new Error('A senha de usuario é obrigatória.');
+      }
+
+      const usuarioEncontrado = await Usuario.pegarPeloEmail(data.email);
+
+      if (usuarioEncontrado) {
+        throw new Error('Email já cadastrado!');
+      }
+
+      data.senha = await bcryptjs.hash(data.senha, 8);
+
+      const usuario = new Usuario(data);
       const resposta = await usuario.salvar(usuario);
+
       return { message: 'usuario criado', content: resposta };
     } catch (err) {
       throw new Error(err.message);

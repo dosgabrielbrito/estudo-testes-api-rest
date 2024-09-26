@@ -15,8 +15,8 @@ afterEach(() => {
 
 //Authorizarion Token:
 const loginUsuario = {
-  email: process.env.USER_EMAIL,
-  senha: process.env.PASS_EMAIL,
+  email: process.env.USER_TEST,
+  senha: process.env.PASS_TEST,
 };
 const tokenUsuario = await request(app).post('/login').send(loginUsuario);
 

@@ -1,4 +1,4 @@
-# TESTES PARA AUTHSERVICE.JS
+# TESTES PARA authService.js
 
 - O usuário deve possuir um nome, email e senha
 - A senha do usuário precisa ser criptografada quando for salva no banco de dados

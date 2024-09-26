@@ -1,4 +1,4 @@
-# TESTES PARA AUTHROUTES.JS
+# TESTES PARA authRoutes.js
 
 - O login deve possuir um e-mail e senha para se autenticar;
 - O login deve validar se o usuário está cadastrado;

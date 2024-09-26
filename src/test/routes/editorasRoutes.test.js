@@ -5,7 +5,7 @@ import 'dotenv/config';
 
 let server;
 beforeEach(() => {
-  const port = 3000;
+  const port = 4000;
   server = app.listen(port);
 });
 
@@ -18,7 +18,6 @@ const loginUsuario = {
   email: process.env.USER_EMAIL,
   senha: process.env.PASS_EMAIL,
 };
-
 const tokenUsuario = await request(app).post('/login').send(loginUsuario);
 
 describe('GET em /editoras', () => {

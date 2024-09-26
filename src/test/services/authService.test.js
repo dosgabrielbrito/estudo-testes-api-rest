@@ -7,23 +7,21 @@ import Usuario from '../../models/usuario.js';
 //Instância para teste:
 const authService = new AuthService();
 
-await Usuario.excluir(4);
-
 //Testes da cadastrarUsuario:
 describe('Testes da authService.cadastrarUsuario', () => {
   it('O usuário deve possuir um nome, email e senha', async () => {
     //Arrange:
     const usuarioMockNome = {
-      email: 'gabriel@gabriel.com',
-      senha: 'teste123',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
     const usuarioMockEmail = {
-      nome: 'Gabriel',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      senha: 'senha123',
     };
     const usuarioMockSenha = {
-      nome: 'Gabriel',
-      email: 'gabriel@gabriel.com',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
     };
     //Act:
     const usuarioSalvoNome = authService.cadastrarUsuario(usuarioMockNome);
@@ -43,14 +41,14 @@ describe('Testes da authService.cadastrarUsuario', () => {
 
   it('A senha do usuário precisa ser criptografada quando for salva no banco de dados', async () => {
     const data = {
-      nome: 'Gabriel',
-      email: 'gabriel@gabriel.com',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const usuarioSalvo = await authService.cadastrarUsuario(data);
     const senhaIguais = await bcryptjs.compare(
-      'teste123',
+      'senha123',
       usuarioSalvo.content.senha
     );
 
@@ -61,9 +59,9 @@ describe('Testes da authService.cadastrarUsuario', () => {
 
   it('Não pode ser cadastrado um usuário com e-mail duplicado', async () => {
     const usuarioMock = {
-      nome: 'Gabriel',
-      email: 'gabriel@gabriel.com',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const usuarioSalvo = await authService.cadastrarUsuario(usuarioMock);
@@ -76,9 +74,9 @@ describe('Testes da authService.cadastrarUsuario', () => {
 
   it('Ao cadastrar um usuário, deve ser retornado mensagem informando que o usuário foi cadastrado', async () => {
     const usuarioMock = {
-      nome: 'Gabriel',
-      email: 'gabriel@gabriel.com',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const usuarioSalvo = await authService.cadastrarUsuario(usuarioMock);
@@ -90,9 +88,9 @@ describe('Testes da authService.cadastrarUsuario', () => {
 
   it('Ao cadastrar um usuário, validar retorno do usuário', async () => {
     const usuarioMock = {
-      nome: 'Gabriel',
-      email: 'gabriel@gabriel.com',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const usuarioSalvo = await authService.cadastrarUsuario(usuarioMock);

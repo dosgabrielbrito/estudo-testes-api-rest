@@ -7,33 +7,32 @@ import Usuario from '../../models/usuario.js';
 
 const authService = new AuthService();
 
-let servidor;
-
+let server;
 beforeEach(() => {
-  const porta = 3000;
-  servidor = app.listen(porta);
+  const port = 3000;
+  server = app.listen(port);
 });
 
 afterEach(() => {
-  servidor.close();
+  server.close();
 });
 
 describe('Testando a porta login (POST)', () => {
   it('O login deve possuir um e-mail e senha para se autenticar', async () => {
     const loginMockEmail = {
-      senha: 'teste123',
+      senha: 'senha123',
     };
     const loginMockSenha = {
-      email: 'gabriel@email.com.br',
+      email: 'daniel@email.com',
     };
 
-    await request(servidor)
+    await request(server)
       .post('/login')
       .send(loginMockEmail)
       .expect(500)
       .expect('"O email do usuario é obrigatório."');
 
-    await request(servidor)
+    await request(server)
       .post('/login')
       .send(loginMockSenha)
       .expect(500)
@@ -42,11 +41,11 @@ describe('Testando a porta login (POST)', () => {
 
   it('O login deve validar se o usuário está cadastrado', async () => {
     const loginMock = {
-      email: 'gabriel@email.com.br',
-      senha: 'teste123',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
-    await request(servidor)
+    await request(server)
       .post('/login')
       .set('Accept', 'application/json')
       .send(loginMock)
@@ -56,19 +55,19 @@ describe('Testando a porta login (POST)', () => {
 
   it('O login deve validar e-mail e senha incorreto', async () => {
     const cadastroMock = {
-      nome: 'Gabriel Brito',
-      email: 'gabriel@email.com.br',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const loginMock = {
-      email: 'gabriel@email.com.br',
-      senha: 'teste321',
+      email: 'daniel@email.com',
+      senha: 'senha321',
     };
 
     const usuarioCadastrado = await authService.cadastrarUsuario(cadastroMock);
 
-    await request(servidor)
+    await request(server)
       .post('/login')
       .set('Accept', 'application/json')
       .send(loginMock)
@@ -80,19 +79,19 @@ describe('Testando a porta login (POST)', () => {
 
   it('O login deve validar se esta sendo retornado um accessToken.', async () => {
     const cadastroMock = {
-      nome: 'Gabriel Brito',
-      email: 'gabriel@email.com.br',
-      senha: 'teste123',
+      nome: 'Daniel Silva',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const loginMock = {
-      email: 'gabriel@email.com.br',
-      senha: 'teste123',
+      email: 'daniel@email.com',
+      senha: 'senha123',
     };
 
     const usuarioCadastrado = await authService.cadastrarUsuario(cadastroMock);
 
-    const loginResultado = await request(servidor)
+    const loginResultado = await request(server)
       .post('/login')
       .set('Accept', 'application/json')
       .send(loginMock)
